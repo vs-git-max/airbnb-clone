@@ -3,3 +3,7 @@
 @theme {
   --color-primary: #ff5a5f;
 }
+
+.leaflet-container {
+  z-index: 0 !important;
+}

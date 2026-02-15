@@ -8,6 +8,7 @@ import { useAuthModal } from "@/app/store/useAuthModalStore";
 import { authClient } from "@/app/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useCreateListingModal } from "@/app/store/useCreateListingModal";
 
 const Navbar = () => {
   const router = useRouter();
@@ -39,6 +40,8 @@ const Navbar = () => {
     await authClient.signOut();
     router.refresh();
   }
+
+  const { open: openCreateListing } = useCreateListingModal();
 
   return (
     <nav className="fixed top-0 w-full h-18 lg:h-24 shadow-md z-100 bg-white">
@@ -73,7 +76,10 @@ const Navbar = () => {
         {/* right hand navbar */}
         <div className="flex items-center gap-4 relative" ref={menuRef}>
           {session && !isPending && (
-            <button className="hidden md:block text-sm font-medium px-4 py-2 rounded-full hover:bg-gray-100  bg-gray-50">
+            <button
+              onClick={openCreateListing}
+              className="hidden md:block text-sm font-medium px-4 py-2 rounded-full hover:bg-gray-100  bg-gray-50"
+            >
               Airbnb your home
             </button>
           )}
@@ -112,7 +118,10 @@ const Navbar = () => {
             <ul className="text-gray-800 text-sm flex flex-col">
               {session && !isPending && (
                 <>
-                  <li className="px-4 py-3 hover:bg-gray-100 cursor-pointer">
+                  <li
+                    onClick={openCreateListing}
+                    className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                  >
                     Airbnb your home
                   </li>
                   <Link
