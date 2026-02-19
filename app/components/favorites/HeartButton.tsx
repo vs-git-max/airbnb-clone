@@ -1,7 +1,7 @@
 "use client";
 import { useFav } from "@/app/hooks/useFavorites";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
+
 import { LuHeart } from "react-icons/lu";
 
 interface HeartButtonProps {
@@ -16,9 +16,6 @@ export default function HeartButton({
   currentUser,
   listingId,
 }: HeartButtonProps) {
-  //working on the refresh thing
-  const router = useRouter();
-
   const { fav, toggleFav } = useFav({ currentUser, listingId });
 
   return (
@@ -26,7 +23,6 @@ export default function HeartButton({
       onClick={(e) => {
         e.stopPropagation();
         toggleFav();
-        router.refresh();
       }}
       className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white shadow cursor-pointer"
     >
