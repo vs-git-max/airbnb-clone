@@ -89,7 +89,10 @@ export default function CreateListingModal() {
     setImage(file);
     setPreview(URL.createObjectURL(file));
   }
-  console.log(preview);
+
+  //price states
+  const [price, setPrice] = useState("");
+
   return (
     <Modal isOpen={isOpen} onClose={close} title="Create new listing">
       {/* step indicator */}
@@ -174,6 +177,19 @@ export default function CreateListingModal() {
 
         {step === STEPS.IMAGES && (
           <ImageUpload onChange={handleImageChange} preview={preview} />
+        )}
+
+        {step === STEPS.PRICE && (
+          <Input
+            name="price"
+            type="number"
+            label="Price"
+            min={10}
+            value={price}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPrice(e.target.value)
+            }
+          />
         )}
       </div>
 
