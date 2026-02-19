@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
 import { useCreateListingModal } from "../store/useCreateListingModal";
 import Modal from "./Modal";
 import Button from "../components/ui/Button";
@@ -53,10 +55,6 @@ export default function CreateListingModal() {
     }
   };
 
-  async function createListing() {
-    alert("Form submitted");
-  }
-
   //state for the category and selected
   const [category, setCategory] = useState<string | null>(null);
 
@@ -90,9 +88,91 @@ export default function CreateListingModal() {
     setPreview(URL.createObjectURL(file));
   }
 
+  //loading state
+  const [loading, setLoading] = useState(false);
+
   //price states
   const [price, setPrice] = useState("");
 
+  //handling create listing
+  async function createListing() {
+    if (
+      !title ||
+      !description ||
+      !price ||
+      !location?.value ||
+      !category ||
+      !image
+    ) {
+      toast("Creating listing failed ,All fields needed", {
+        style: {
+          background: "#ff5a5f",
+          color: "#f0f8ff",
+        },
+      });
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const formData = new FormData();
+
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("category", category);
+      formData.append("locationValue", location.value);
+      formData.append("roomCount", roomCount.toString());
+      formData.append("bathroomCount", bathroomCount.toString());
+      formData.append("guestCount", guestCount.toString());
+      formData.append("image", image);
+
+      await axios.post("/api/listing", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      toast("Creating listing success", {
+        style: {
+          background: "#9cab01",
+          color: "#f0f8ff",
+        },
+      });
+
+      handleClose();
+
+      //route to properties page
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast(error.response?.data.error || "Something went wrong", {
+          style: {
+            background: "#ff5a5f",
+            color: "#f0f8ff",
+          },
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleClose() {
+    setCategory("");
+    setPrice("");
+    setRoomCount(1);
+    setBathroomCount(1);
+    setGuestCount(1);
+    setLocation(null);
+    setTitle("");
+    setDescription("");
+    setImage(null);
+    setPreview(null);
+    setStep(STEPS.CATEGORY);
+
+    //closing the modal
+    close();
+  }
   return (
     <Modal isOpen={isOpen} onClose={close} title="Create new listing">
       {/* step indicator */}
@@ -201,6 +281,8 @@ export default function CreateListingModal() {
           </Button>
         )}
         <Button
+          loading={loading}
+          disabled={loading}
           onClick={() =>
             step < STEPS.PRICE ? setStep((prev) => prev + 1) : createListing()
           }

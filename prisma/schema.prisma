@@ -23,6 +23,7 @@ model Listing {
   guestCount    Int
   price         Int
   locationValue String
+  imageSrc String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
