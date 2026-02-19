@@ -14,9 +14,11 @@ import dynamic from "next/dynamic";
 import Counter from "../components/listing/Counter";
 import Input from "../components/ui/Input";
 import ImageUpload from "../components/listing/ImageUpload";
+import { useRouter } from "next/navigation";
 
 export default function CreateListingModal() {
   const { isOpen, close } = useCreateListingModal();
+  const router = useRouter();
 
   //steps
   const STEPS = {
@@ -172,6 +174,9 @@ export default function CreateListingModal() {
 
     //closing the modal
     close();
+
+    //refreshing the page
+    router.refresh();
   }
   return (
     <Modal isOpen={isOpen} onClose={close} title="Create new listing">

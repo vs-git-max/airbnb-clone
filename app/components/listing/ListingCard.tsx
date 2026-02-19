@@ -1,16 +1,9 @@
+import { Listing } from "@/app/generated/prisma/client";
 import Image from "next/image";
 import { LuHeart } from "react-icons/lu";
 
-interface ListingProps {
-  id: number;
-  title: string;
-  location: string;
-  image: string;
-  price: number;
-}
-
 interface ListingCardProps {
-  listing: ListingProps;
+  listing: Listing;
 }
 
 const ListingCard = ({ listing }: ListingCardProps) => {
@@ -20,7 +13,7 @@ const ListingCard = ({ listing }: ListingCardProps) => {
       {/* image */}
       <div className="overflow-hidden relative aspect-square rounded-xl ">
         <Image
-          src={listing.image}
+          src={listing.imageSrc}
           alt={listing.title}
           className="object-cover transition group-hover:scale-105 "
           fill
@@ -30,7 +23,7 @@ const ListingCard = ({ listing }: ListingCardProps) => {
         </button>
       </div>
       <div className="space-y-1 mt-3 text-sm">
-        <p className="text-gray-500">{listing.location}</p>
+        <p className="text-gray-500">{listing.locationValue}</p>
         <p className="text-gray-900 truncate font-medium">{listing.title}</p>
         <p className="pt-1">
           <span className="font-semibold text-gray-900">${listing.price}</span>{" "}

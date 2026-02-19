@@ -66,3 +66,40 @@ export async function POST(req: Request) {
     );
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+
+    const category = searchParams.get("category");
+    const locationValue = searchParams.get("locationValue");
+    const maxPrice = searchParams.get("maxPrice");
+    const minPrice = searchParams.get("minPrice");
+
+    const listings = await prisma.listing.findMany({
+      where: {
+        ...(category && { category }),
+        ...(locationValue && { locationValue }),
+        ...(minPrice || maxPrice
+          ? {
+              price: {
+                ...(minPrice ? { gte: Number(minPrice) } : {}),
+                ...(maxPrice ? { lte: Number(maxPrice) } : {}),
+              },
+            }
+          : {}),
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return NextResponse.json(listings);
+  } catch (error) {
+    console.log("[LISTINGS_Get]", error);
+    return NextResponse.json(
+      { error: "Failed fetch listings" },
+      { status: 500 },
+    );
+  }
+}
