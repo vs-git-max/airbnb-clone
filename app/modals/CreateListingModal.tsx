@@ -11,6 +11,7 @@ import { Country } from "../hooks/userCountries";
 import dynamic from "next/dynamic";
 import Counter from "../components/listing/Counter";
 import Input from "../components/ui/Input";
+import ImageUpload from "../components/listing/ImageUpload";
 
 export default function CreateListingModal() {
   const { isOpen, close } = useCreateListingModal();
@@ -21,7 +22,7 @@ export default function CreateListingModal() {
     LOCATION: 1,
     COUNTERS: 2,
     DETAILS: 3,
-    IMAGE: 4,
+    IMAGES: 4,
     PRICE: 5,
   };
 
@@ -79,6 +80,16 @@ export default function CreateListingModal() {
   //details states
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  //image upload states
+  const [image, setImage] = useState<null | File>(null);
+  const [preview, setPreview] = useState<null | string>(null);
+
+  function handleImageChange(file: File) {
+    setImage(file);
+    setPreview(URL.createObjectURL(file));
+  }
+  console.log(preview);
   return (
     <Modal isOpen={isOpen} onClose={close} title="Create new listing">
       {/* step indicator */}
@@ -159,6 +170,10 @@ export default function CreateListingModal() {
             />
             <p className="text-xs text-gray-400">Short titles work best</p>
           </div>
+        )}
+
+        {step === STEPS.IMAGES && (
+          <ImageUpload onChange={handleImageChange} preview={preview} />
         )}
       </div>
 
