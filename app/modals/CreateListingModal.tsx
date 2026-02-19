@@ -10,6 +10,7 @@ import CountrySelect from "../components/listing/CountrySelect";
 import { Country } from "../hooks/userCountries";
 import dynamic from "next/dynamic";
 import Counter from "../components/listing/Counter";
+import Input from "../components/ui/Input";
 
 export default function CreateListingModal() {
   const { isOpen, close } = useCreateListingModal();
@@ -74,11 +75,15 @@ export default function CreateListingModal() {
   const [guestCount, setGuestCount] = useState(1);
   const [bathroomCount, setBathroomCount] = useState(1);
   const [roomCount, setRoomCount] = useState(1);
+
+  //details states
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   return (
     <Modal isOpen={isOpen} onClose={close} title="Create new listing">
       {/* step indicator */}
 
-      <div className="mb-2 flex items-center justify-between text-sm text-gray-500">
+      <div className="mb-7 flex items-center justify-between text-sm text-gray-500">
         <span>Step {step + 1} of 6</span>
         <span className="font-medium text-gray-700">{stepTittle()}</span>
       </div>
@@ -131,6 +136,28 @@ export default function CreateListingModal() {
               value={bathroomCount}
               onChange={setBathroomCount}
             />
+          </div>
+        )}
+        {step === STEPS.DETAILS && (
+          <div className="space-y-10 w-full">
+            <Input
+              name="title"
+              label="Title"
+              value={title}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setTitle(e.target.value);
+              }}
+            />
+            <Input
+              as="textarea"
+              name="description"
+              label="Description"
+              value={description}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                setDescription(e.target.value);
+              }}
+            />
+            <p className="text-xs text-gray-400">Short titles work best</p>
           </div>
         )}
       </div>
