@@ -127,7 +127,7 @@ export default function CreateListingModal() {
       formData.append("guestCount", guestCount.toString());
       formData.append("image", image);
 
-      await axios.post("/api/listing", formData, {
+      await axios.post("/api/listings", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
