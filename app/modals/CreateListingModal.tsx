@@ -46,7 +46,7 @@ export default function CreateListingModal() {
       case STEPS.DETAILS:
         return "How would you describe your place";
 
-      case STEPS.IMAGE:
+      case STEPS.IMAGES:
         return "Upload the images of your place";
 
       case STEPS.PRICE:
@@ -145,6 +145,7 @@ export default function CreateListingModal() {
       handleClose();
 
       //route to properties page
+      router.replace("/properties");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast(error.response?.data.error || "Something went wrong", {

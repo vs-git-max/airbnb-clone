@@ -9,9 +9,10 @@ interface ListingCardProps {
     id: string;
     favorites: string[];
   } | null;
+  hideFav?: boolean;
 }
 
-const ListingCard = ({ listing, currentUser }: ListingCardProps) => {
+const ListingCard = ({ hideFav, listing, currentUser }: ListingCardProps) => {
   const { getByValue } = useCountries();
   const location = getByValue(listing.locationValue);
 
@@ -25,7 +26,9 @@ const ListingCard = ({ listing, currentUser }: ListingCardProps) => {
           className="object-cover transition group-hover:scale-105 "
           fill
         />
-        <HeartButton listingId={listing?.id} currentUser={currentUser} />
+        {!hideFav && (
+          <HeartButton listingId={listing?.id} currentUser={currentUser} />
+        )}
       </div>
       <div className="space-y-1 mt-3 text-sm">
         <p className="text-gray-500">
