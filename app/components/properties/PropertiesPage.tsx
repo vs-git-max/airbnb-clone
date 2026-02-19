@@ -25,6 +25,7 @@ export default async function PropertiesPage() {
             key={listing.id}
             currentUser={currentUser}
             listing={listing}
+            property
           />
         ))}
       </div>

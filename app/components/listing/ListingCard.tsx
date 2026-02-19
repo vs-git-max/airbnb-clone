@@ -10,9 +10,15 @@ interface ListingCardProps {
     favorites: string[];
   } | null;
   hideFav?: boolean;
+  property?: boolean;
 }
 
-const ListingCard = ({ hideFav, listing, currentUser }: ListingCardProps) => {
+const ListingCard = ({
+  property,
+  hideFav,
+  listing,
+  currentUser,
+}: ListingCardProps) => {
   const { getByValue } = useCountries();
   const location = getByValue(listing.locationValue);
 
@@ -41,6 +47,13 @@ const ListingCard = ({ hideFav, listing, currentUser }: ListingCardProps) => {
           <span className="font-semibold text-gray-900">${listing.price}</span>{" "}
           /<span className="text-gray-500">night</span>
         </p>
+        {property && (
+          <div className="mt-3">
+            <p className="text-sm text-gray-500">
+              Listed on {new Date(listing.createdAt).toLocaleDateString()}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
