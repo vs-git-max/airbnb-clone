@@ -9,6 +9,7 @@ import CategoryCard from "../components/listing/CategoryCard";
 import CountrySelect from "../components/listing/CountrySelect";
 import { Country } from "../hooks/userCountries";
 import dynamic from "next/dynamic";
+import Counter from "../components/listing/Counter";
 
 export default function CreateListingModal() {
   const { isOpen, close } = useCreateListingModal();
@@ -65,9 +66,14 @@ export default function CreateListingModal() {
     () => import("../components/general/map/MapComponent"),
     {
       ssr: false,
-      loading: () => <p className="">Loading map...</p>,
+      loading: () => <p className="text-center py-6">Loading map...</p>,
     },
   );
+
+  //counter states
+  const [guestCount, setGuestCount] = useState(1);
+  const [bathroomCount, setBathroomCount] = useState(1);
+  const [roomCount, setRoomCount] = useState(1);
   return (
     <Modal isOpen={isOpen} onClose={close} title="Create new listing">
       {/* step indicator */}
@@ -102,6 +108,29 @@ export default function CreateListingModal() {
               {" "}
               <MapComponent center={location?.latlng || [51.505, -0.09]} />
             </div>
+          </div>
+        )}
+
+        {step === STEPS.COUNTERS && (
+          <div className="space-y-2">
+            <Counter
+              title="Guests"
+              subtitle="How many guests can stay?"
+              value={guestCount}
+              onChange={setGuestCount}
+            />
+            <Counter
+              title="Rooms"
+              subtitle="How many rooms are available?"
+              value={roomCount}
+              onChange={setRoomCount}
+            />
+            <Counter
+              title="Bathrooms"
+              subtitle="How many bathrooms?"
+              value={bathroomCount}
+              onChange={setBathroomCount}
+            />
           </div>
         )}
       </div>

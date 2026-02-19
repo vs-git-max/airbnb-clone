@@ -28,7 +28,7 @@ export default function MapComponent({ center, price }: MapProps) {
         <Marker position={center} icon={customIcon}>
           {price && (
             <Popup>
-              <p className="font-semibold ">${price} </p>
+              <p className="font-semibold ">${price} /night</p>
             </Popup>
           )}
         </Marker>
