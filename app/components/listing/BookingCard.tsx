@@ -12,6 +12,7 @@ import { LuCheck } from "react-icons/lu";
 import { authClient } from "@/app/lib/auth-client";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface BookingCardProps {
   pricePerNight: number;
@@ -29,6 +30,7 @@ export default function BookingCard({
   listingId,
   hostId,
 }: BookingCardProps) {
+  const router = useRouter();
   const [range, setRange] = useState<Range[]>([
     {
       startDate: new Date(),
@@ -76,6 +78,9 @@ export default function BookingCard({
           color: "#fff",
         },
       });
+
+      router.refresh();
+      router.push("/trips");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast(error.message || "Something happened", {
