@@ -1,9 +1,10 @@
 "use client";
-import { Listing } from "@/app/generated/prisma/client";
 import useCountries from "@/app/hooks/userCountries";
 import Image from "next/image";
 import HeartButton from "../favorites/HeartButton";
 import { useRouter } from "next/navigation";
+import { Listing } from "@/app/types/listing";
+import { format } from "date-fns";
 
 interface ListingCardProps {
   listing: Listing;
@@ -13,6 +14,12 @@ interface ListingCardProps {
   } | null;
   hideFav?: boolean;
   property?: boolean;
+  reservation?: {
+    id: string;
+    startDate: string;
+    endDate: string;
+    totalPrice: number;
+  };
 }
 
 const ListingCard = ({
@@ -20,6 +27,7 @@ const ListingCard = ({
   hideFav,
   listing,
   currentUser,
+  reservation,
 }: ListingCardProps) => {
   const { getByValue } = useCountries();
   const location = getByValue(listing.locationValue);
@@ -49,10 +57,24 @@ const ListingCard = ({
             : listing.locationValue}
         </p>
         <p className="text-gray-900 truncate font-medium">{listing.title}</p>
-        <p className="pt-1">
-          <span className="font-semibold text-gray-900">${listing.price}</span>{" "}
-          /<span className="text-gray-500">night</span>
-        </p>
+        {reservation ? (
+          <>
+            <p className="text-gray-500 text-sm">
+              {format(new Date(reservation.startDate), "MMM d")} -{" "}
+              {format(new Date(reservation.endDate), "MMM d")}
+            </p>
+            <p className="pt-1 font-semibold text-gray-900">
+              ${reservation.totalPrice}
+            </p>
+          </>
+        ) : (
+          <p className="pt-1">
+            <span className="font-semibold text-gray-900">
+              ${listing.price}
+            </span>{" "}
+            /<span className="text-gray-500">night</span>
+          </p>
+        )}
         {property && (
           <div className="mt-3">
             <p className="text-sm text-gray-500">
