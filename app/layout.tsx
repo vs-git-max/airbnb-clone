@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className}  antialiased`}>
+      <body className={`${poppins.className} pt-18 lg:pt-24 antialiased`}>
         <Navbar />
         {children}
         <RegisterModal />
