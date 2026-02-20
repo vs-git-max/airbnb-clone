@@ -1,6 +1,7 @@
 import BookingCard from "@/app/components/listing/BookingCard";
 import { getListing } from "@/app/server-actions/getListing";
 import Image from "next/image";
+import ListingViewMap from "./ListingViewMap";
 
 interface ListingPageProps {
   listingId: string;
@@ -29,7 +30,7 @@ export default async function ListingPage({ listingId }: ListingPageProps) {
       </div>
       {/* main content */}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* left */}
         <div className="lg:col-span-2">
           {/* host info card */}
@@ -70,10 +71,19 @@ export default async function ListingPage({ listingId }: ListingPageProps) {
               <p className="">{listing.description}</p>
             </div>
           </div>
+          <ListingViewMap
+            price={listing.price}
+            locationValue={listing.locationValue}
+          />
         </div>
 
         {/* right */}
-        <BookingCard pricePerNight={listing.price} />
+        <BookingCard
+          hostId={listing.userId}
+          pricePerNight={listing.price}
+          listingId={listingId}
+          reservations={listing.reservations}
+        />
       </div>
     </div>
   );
