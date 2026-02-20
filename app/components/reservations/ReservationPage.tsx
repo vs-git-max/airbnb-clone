@@ -31,6 +31,8 @@ export default async function ReservationPage() {
               endDate: reservation.endDate,
               totalPrice: reservation.totalPrice,
             }}
+            trip
+            actionLabel="Cancel reservation"
           />
         ))}
       </div>

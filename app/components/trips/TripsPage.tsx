@@ -31,6 +31,8 @@ export default async function TripsPage() {
               endDate: trip.endDate,
               totalPrice: trip.totalPrice,
             }}
+            trip
+            actionLabel="Cancel trip"
           />
         ))}
       </div>

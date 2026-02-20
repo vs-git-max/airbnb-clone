@@ -5,6 +5,7 @@ import HeartButton from "../favorites/HeartButton";
 import { useRouter } from "next/navigation";
 import { Listing } from "@/app/types/listing";
 import { format } from "date-fns";
+import CancelReservationButton from "../reservations/CancelReservationButton";
 
 interface ListingCardProps {
   listing: Listing;
@@ -20,6 +21,8 @@ interface ListingCardProps {
     endDate: string;
     totalPrice: number;
   };
+  trip?: boolean;
+  actionLabel?: string;
 }
 
 const ListingCard = ({
@@ -28,6 +31,8 @@ const ListingCard = ({
   listing,
   currentUser,
   reservation,
+  trip,
+  actionLabel,
 }: ListingCardProps) => {
   const { getByValue } = useCountries();
   const location = getByValue(listing.locationValue);
@@ -81,6 +86,13 @@ const ListingCard = ({
               Listed on {new Date(listing.createdAt).toLocaleDateString()}
             </p>
           </div>
+        )}
+
+        {trip && reservation && actionLabel && (
+          <CancelReservationButton
+            actionLabel={actionLabel}
+            reservationId={reservation?.id}
+          />
         )}
       </div>
     </div>
