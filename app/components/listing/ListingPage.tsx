@@ -2,6 +2,7 @@ import BookingCard from "@/app/components/listing/BookingCard";
 import { getListing } from "@/app/server-actions/getListing";
 import Image from "next/image";
 import ListingViewMap from "./ListingViewMap";
+import { LuBath, LuBedDouble, LuUsers } from "react-icons/lu";
 
 interface ListingPageProps {
   listingId: string;
@@ -52,13 +53,31 @@ export default async function ListingPage({ listingId }: ListingPageProps) {
                 />
               )}
             </div>
-            <div className="">
+            <div className="space-y-1">
               <h2 className="text-lg font-semibold text-gray-800 ">
                 Hosted by {listing.user.name}
               </h2>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                Super host
-              </p>
+
+              <div className="flex items-center flex-wrap gap-3 text-sm text-neutral-600">
+                <div className="flex items-center gap-2 rounded-full border border-neutral-200 px-3 py-1.5">
+                  <LuUsers className="text-neutral-500" size={16} />
+                  <span className="font-medium text-neutral-800">
+                    {listing.guestCount} Guests
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 rounded-full border border-neutral-200 px-3 py-1.5">
+                  <LuBedDouble className="text-neutral-500" size={16} />
+                  <span className="font-medium text-neutral-800">
+                    {listing.roomCount} Rooms
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 rounded-full border border-neutral-200 px-3 py-1.5">
+                  <LuBath className="text-neutral-500" size={16} />
+                  <span className="font-medium text-neutral-800">
+                    {listing.bathroomCount} Bathrooms
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 

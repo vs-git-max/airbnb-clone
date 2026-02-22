@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useFilterModal } from "../store/userFilterListingModal";
 import Modal from "./Modal";
 import useCountries, { Country } from "../hooks/userCountries";
@@ -19,7 +19,7 @@ const STEPS = {
   PRICE: 2,
 };
 
-export default function FilterModal() {
+function FilterModalComponent() {
   const { getByValue } = useCountries();
   const searchParams = useSearchParams();
   const [step, setStep] = useState(STEPS.CATEGORY);
@@ -175,5 +175,13 @@ export default function FilterModal() {
         </Button>
       </div>
     </Modal>
+  );
+}
+
+export default function FilterModal() {
+  return (
+    <Suspense>
+      <FilterModalComponent />
+    </Suspense>
   );
 }
