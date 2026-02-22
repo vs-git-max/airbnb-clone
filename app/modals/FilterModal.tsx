@@ -30,7 +30,7 @@ function FilterModalComponent() {
   const [maxPrice, setMaxPrice] = useState<string>(
     searchParams.get("maxPrice") ?? "",
   );
-  const [category, setCategory] = useState<string>(
+  const [category, setCategory] = useState<string | null>(
     searchParams.get("category") ?? "",
   );
 
