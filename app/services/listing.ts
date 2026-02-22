@@ -22,7 +22,7 @@ export async function getListings(params?: GetListingParam) {
     );
 
     return data;
-  } catch (error) {
+  } catch {
     throw new Error("Failed to fetch listings");
   }
 }
