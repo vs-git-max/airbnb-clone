@@ -2,16 +2,11 @@ import { Suspense } from "react";
 import Listings from "./components/listing/Listings";
 import Containers from "./layouts/Containers";
 
-export interface HomeProps {
-  searchParams: {
-    category?: string;
-    locationValue?: string;
-    minPrice?: number;
-    maxPrice?: number;
-  };
-}
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-export default function Home({ searchParams }: HomeProps) {
+export default async function Home(props: { searchParams: SearchParams }) {
+  const searchParams = await props.searchParams;
+
   return (
     <Containers>
       <Suspense fallback={<p className="">Loading...</p>}>

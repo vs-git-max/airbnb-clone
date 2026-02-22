@@ -1,8 +1,17 @@
-import { HomeProps } from "@/app/page";
 import ListingCard from "./ListingCard";
 import { getCurrentUser } from "@/app/server-actions/getCurrentUser";
 import { getListings } from "@/app/services/listing";
 import { Listing } from "@/app/generated/prisma/client";
+import EmptyListings from "../ui/EmptyListings";
+
+interface HomeProps {
+  searchParams: {
+    category?: string;
+    locationValue?: string;
+    minPrice?: number;
+    maxPrice?: number;
+  };
+}
 
 export default async function Listings({ searchParams }: HomeProps) {
   const params = searchParams;
@@ -13,6 +22,16 @@ export default async function Listings({ searchParams }: HomeProps) {
     minPrice: params.minPrice ? Number(params.minPrice) : undefined,
     maxPrice: params.minPrice ? Number(params.maxPrice) : undefined,
   });
+
+  if (listings.length === 0) {
+    return (
+      <EmptyListings
+        filters
+        title="No Listing Found"
+        subtitle="We could not find any listing that match your filters. Try adjusting or clearing some filters to see more results."
+      />
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">

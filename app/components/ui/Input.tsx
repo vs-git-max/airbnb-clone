@@ -5,7 +5,7 @@ interface BaseProps {
   label: string;
   error?: string;
   as?: "input" | "textarea";
-  value: string;
+  value: string | null;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }
 
