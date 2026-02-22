@@ -46,7 +46,7 @@ const ListingCard = ({
       {/* image */}
       <div className="overflow-hidden relative aspect-square rounded-xl ">
         <Image
-          src={listing.imageSrc}
+          src={listing.imageSrc || ""}
           alt={listing.title}
           className="object-cover transition group-hover:scale-105 "
           fill
@@ -91,7 +91,7 @@ const ListingCard = ({
         {trip && reservation && actionLabel && (
           <CancelReservationButton
             actionLabel={actionLabel}
-            reservationId={reservation?.id}
+            reservationId={reservation.id}
           />
         )}
       </div>
