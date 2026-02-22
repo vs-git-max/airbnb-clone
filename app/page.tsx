@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Listings from "./components/listing/Listings";
 import Containers from "./layouts/Containers";
+import ListingCardSkeleton from "./components/skeletons/ListingCardSkeleton";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
@@ -9,7 +10,7 @@ export default async function Home(props: { searchParams: SearchParams }) {
 
   return (
     <Containers>
-      <Suspense fallback={<p className="">Loading...</p>}>
+      <Suspense fallback={<ListingCardSkeleton isHome />}>
         <Listings searchParams={searchParams} />
       </Suspense>
     </Containers>

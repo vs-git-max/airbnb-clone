@@ -1,4 +1,5 @@
 import ListingPage from "@/app/components/listing/ListingPage";
+import ListingDetailsSkeleton from "@/app/components/skeletons/ListingDetailsSkeleton";
 import { Suspense } from "react";
 
 export default async function Page({
@@ -9,7 +10,7 @@ export default async function Page({
   const listingId = await (await params).listingId;
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<ListingDetailsSkeleton />}>
       <ListingPage listingId={listingId} />
     </Suspense>
   );
